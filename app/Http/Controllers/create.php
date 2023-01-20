@@ -21,12 +21,16 @@ class create extends Controller
             default => 'error'
         };
     }
-    public function show()
+    public function show($number)
     {
+        $nani = [];
+        $cars = ['das auto', 'schsuzchenvagen', 'lada', 'tank', 'haha'];
         $feverbeaver = 'beaverfever';
         return view('results', [
             'feverbeaver' => $feverbeaver,
-            'number' => 999
+            'number' => $number,
+            'lot' => $cars,
+            'wha' => $nani
         ]);
     }
 }

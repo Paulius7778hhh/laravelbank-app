@@ -1,3 +1,6 @@
+@extends('main')
+@section('title','feverbeaver')
+@section('results')
 <h1>{{$feverbeaver}}</h1>
 @if($number == 1)
 <h1>beaver</h1>
@@ -8,3 +11,19 @@
 @else
 <h1>brick</h1>
 @endif
+
+@foreach($lot as $cars)
+<li>{{$cars}}</li>
+
+
+@endforeach
+@forelse($wha as $whas)
+
+<li>{{$whas}}</li>
+
+
+
+@empty
+<h1>theresnolimit<h1>
+        @endforelse
+        @endsection

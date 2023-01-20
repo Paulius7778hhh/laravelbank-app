@@ -20,4 +20,4 @@ Route::get('/', function () {
 Route::get('/kaioken/times/two/{pc}', fn () => 'the last one after "/" is variable requires any input to be in it to work');
 Route::get('/genkidama/{a}/{b}', [create::class, 'wel']);
 Route::get('/shoryuken/{a}/{b}', [create::class, 'FunctionName']);
-Route::get('/shoryuken/show/', [create::class, 'show']);
+Route::get('/shoryuken/show/{number}', [create::class, 'show']);
