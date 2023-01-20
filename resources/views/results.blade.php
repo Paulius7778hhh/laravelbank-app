@@ -1,4 +1,4 @@
-@extends('main')
+@extends('layouts.app')
 @section('title','feverbeaver')
 @section('results')
 <h1>{{$feverbeaver}}</h1>

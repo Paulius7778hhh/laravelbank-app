@@ -12,6 +12,7 @@
 </head>
 <body>
     <h1>welcome</h1>
+    @include('menu')
     @yield('results')
 </body>
 </html>
