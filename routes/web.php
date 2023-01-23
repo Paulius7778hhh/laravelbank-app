@@ -24,6 +24,7 @@ Route::get('/shoryuken/{a}/{b}', [create::class, 'FunctionName']);
 Route::get('/doryuken/show/{number}', [create::class, 'show'])->name('menu');
 Route::get('/form', [PostController::class, 'showForm'])->name('showForm');
 Route::post('/form', [PostController::class, 'doForm'])->name('doForm');
+Route::get('/welcome', [PostController::class, 'welc']);
 
 Auth::routes();
 

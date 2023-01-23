@@ -2,63 +2,98 @@
 
 namespace App\Http\Controllers;
 
-use Dotenv\Validator;
-use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class PostController extends Controller
 {
     public function showForm(Request $request)
     {
         $sum = $request->session()->pull('oat', '');
+
         return view('post.form', [
             'sum' => $sum
         ]);
     }
+
     public function doForm(Request $request)
     {
 
         $validator = Validator::make(
             $request->all(),
             [
-                'sum_o' => 'required|numeric |max:100',
-                'sum_t' => 'required|numeric |max:100'
+                'sum_o' => 'required|numeric|max:100',
+                'sum_t' => 'required|numeric|max:100',
             ],
             [
-                'sum_x.required' => 'Nu kažką praleidai',
-                'sum_y.required' => 'Nu kažką praleidai',
-                'sum_x.max' => 'Nu labai jau daug',
-                'sum_y.max' => 'Nu labai jau daug'
+                'sum_o.required' => 'Nu kažką praleidai',
+                'sum_t.required' => 'Nu kažką praleidai',
+                'sum_o.max' => 'Nu labai jau daug',
+                'sum_t.max' => 'Nu labai jau daug'
             ]
         );
+
         $request->flash();
-        if ($validated->fails()) {
-            return redirect()->back()->withErrors($validated);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator);
         }
-        $validated->after(function ($validated) use ($request) {
-            if ($request->sum_x + $request->sum_y > 150) {
-                $validated->errors()->add(
-                    'x_y',
+
+        $validator->after(function ($validator) use ($request) {
+            if ($request->sum_o + $request->sum_t > 150) {
+                $validator->errors()->add(
+                    'o_t',
                     'Sum is to big!'
                 );
             }
         });
-        $sum =  $request->sum_o + $request->sum_t;
-        dump($sum);
 
-        //$request->session()->put('oat', $sum);
-        $request->session()->put('status', 'Task was successful');
-        $request->flash();
+        // $validator->after(fn ($validator) 
+        // => $request->sum_x + $request->sum_y > 150 ? $validator->errors()->add('x_y', 'Sum is to big!') : null);
+
+
+
+
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator);
+        }
+
+        $sum = $request->sum_o + $request->sum_t;
+
+        // dump($sum);
+
+        // $request->session()->put('sum_result', $sum);
+        //$request->flash();
+        $request->session()->pull('status', 'Task was successful!');
+
+
         return redirect()->route('showForm')->with('oat', $sum);
     }
+    public function welc(Request $request)
+    {
+
+
+        return view('welcome');
+    }
+    public static function account_nr()
+    {
+
+        $start = 0;
+        $end = 11;
+        $end2 = 2;
+        $acountt = 'LT' . str_pad(rand(0, 99), $end2, $start, STR_PAD_LEFT) . '73000' . str_pad(rand(0, 99999999999), $end, $start, STR_PAD_LEFT);
+        //if ($data  == null) {
+        return $acountt;
+        //}
+        //foreach ($data as $acount) {
+        //    if ($acount['acount'] == $acountt) {
+        //        while ($acount['acount'] !== $acountt) {
+        //            return $acountt !== $acount['acount'];
+        //        }
+        //    } else {
+        //        return $acountt;
+        //    }
+        //}
+    }
 }
-
-$validator = Validator::make(
-
-    [
-        'sum_x' => 'required|numeric|max:100',
-        'sum_y' => 'required|numeric|max:100',
-    ]
-);
-
-$request->flash();
