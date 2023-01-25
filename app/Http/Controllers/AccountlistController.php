@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Accountlist;
-use App\Http\Requests\StoreAccountlistRequest;
-use App\Http\Requests\UpdateAccountlistRequest;
+use Illuminate\Http\Request;
+
 
 class AccountlistController extends Controller
 {
@@ -34,7 +34,7 @@ class AccountlistController extends Controller
      * @param  \App\Http\Requests\StoreAccountlistRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreAccountlistRequest $request)
+    public function store(Request $request)
     {
         //
     }
@@ -68,7 +68,7 @@ class AccountlistController extends Controller
      * @param  \App\Models\Accountlist  $accountlist
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateAccountlistRequest $request, Accountlist $accountlist)
+    public function update(Request $request, Accountlist $accountlist)
     {
         //
     }
