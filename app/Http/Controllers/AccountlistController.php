@@ -15,7 +15,7 @@ class AccountlistController extends Controller
      */
     public function index()
     {
-        //
+        return view('back.account.welcome');
     }
 
     /**
@@ -25,7 +25,7 @@ class AccountlistController extends Controller
      */
     public function create()
     {
-        //
+        return view('back.account.create');
     }
 
     /**

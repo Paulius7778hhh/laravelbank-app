@@ -74,6 +74,7 @@
         <main class="py-4">
             @yield('results')
             @yield('form')
+            @yield('content')
         </main>
     </div>
 </body>
