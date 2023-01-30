@@ -39,5 +39,4 @@ Route::prefix('admin/account')->name('account-')->group(function () {
     Route::get('/edit/{account}', [A::class, 'edit'])->name('edit');
     Route::put('/edit/{account}', [A::class, 'update'])->name('update');
     Route::delete('/delete/{account}', [A::class, 'destroy'])->name('delete');
-    Route::get('/accountlist', [A::class, 'index'])->name('accountlist');
 });
