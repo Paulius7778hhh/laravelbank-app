@@ -18,12 +18,12 @@ return new class extends Migration
             $table->id()->unsigned();
             $table->string('name', 30);
             $table->string('surname', 30);
-            $table->string('username', 60)->startingValue('name' . 'surname');
+            $table->string('username', 60)->nullable();
             $table->string('password', 30);
             $table->char('idnumber', 11);
             $table->bigInteger('balance')->unsigned()->default(0);
             $table->string('email', 40);
-            $table->char('accountid', 20)->default(PostController::account_nr());
+            $table->char('accountid', 24);
             $table->timestamps();
         });
     }

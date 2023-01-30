@@ -33,11 +33,11 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::prefix('admin/account')->name('account-')->group(function () {
-    Route::get('/', [A::class, 'index'])->name('index');
+    //Route::get('/', [A::class, 'index'])->name('index');
     Route::get('/create', [A::class, 'create'])->name('create');
     Route::post('/create', [A::class, 'store'])->name('store');
     Route::get('/edit/{account}', [A::class, 'edit'])->name('edit');
     Route::put('/edit/{account}', [A::class, 'update'])->name('update');
     Route::delete('/delete/{account}', [A::class, 'destroy'])->name('delete');
-    Route::get('/create', [create::class, 'show'])->name('menu');
+    Route::get('/accountlist', [A::class, 'index'])->name('accountlist');
 });

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Accountlist;
 use Illuminate\Http\Request;
+use App\Http\Controllers\PostController;
 
 
 class AccountlistController extends Controller
@@ -15,7 +16,8 @@ class AccountlistController extends Controller
      */
     public function index()
     {
-        return view('back.account.welcome');
+        $accountlist = Accountlist::all()->sortBy('title');
+        return view('back.account.accountlist', ['Accountlist' => $accountlist]);
     }
 
     /**
@@ -25,7 +27,10 @@ class AccountlistController extends Controller
      */
     public function create()
     {
-        return view('back.account.create');
+        $iban = PostController::account_nr();
+        return view('back.account.create', [
+            'acountt' => $iban
+        ]);
     }
 
     /**
@@ -36,7 +41,17 @@ class AccountlistController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $accountlist = new Accountlist;
+        $accountlist->name = $request->name_post;
+        $accountlist->surname = $request->surname_post;
+        $accountlist->username = $request->name_post . $request->surname_post;
+        $accountlist->idnumber = $request->idnumber_post;
+        $accountlist->email = $request->email_post;
+        $accountlist->password = $request->password_post;
+        $accountlist->accountid = $request->accountid_post;
+        $accountlist->balance = 0;
+        $accountlist->save();
+        return redirect()->route('account-accountlist');
     }
 
     /**

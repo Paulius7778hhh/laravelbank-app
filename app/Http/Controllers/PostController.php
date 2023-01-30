@@ -80,9 +80,10 @@ class PostController extends Controller
     {
 
         $start = 0;
-        $end = 11;
+        $end3 = 3;
+        $end4 = 4;
         $end2 = 2;
-        $acountt = 'LT' . str_pad(rand(0, 99), $end2, $start, STR_PAD_LEFT) . '73000' . str_pad(rand(0, 99999999999), $end, $start, STR_PAD_LEFT);
+        $acountt = 'LT' . str_pad(rand(0, 99), $end2, $start, STR_PAD_LEFT) . ' 7300 0' . str_pad(rand(0, 999), $end3, $start, STR_PAD_LEFT) . ' ' . str_pad(rand(0, 9999), $end4, $start, STR_PAD_LEFT) . ' ' . str_pad(rand(0, 9999), $end4, $start, STR_PAD_LEFT);
         //if ($data  == null) {
         return $acountt;
         //}

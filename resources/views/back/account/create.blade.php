@@ -11,25 +11,43 @@
 
                 <div class="card-body">
                     <div class="mb-3">
-                        <form action="{{route('doForm')}}" method="post">
+                        <form action="{{route('account-store')}}" method="post">
+
+
+
+
 
                             <label for="input" class="form-label">name</label>
-                            <input type="text" class="form-control" name="name" placeholder="input name" value="{{old('name')}}">
+                            <input type="text" class="form-control" name="name_post" placeholder="input name" value="{{old('name_post')}}">
+
+
 
                             <label for="input" class="form-label">surname</label>
-                            <input type="text" class="form-control" name="surname" placeholder="input surname" value="{{old('surname')}}">
+                            <input type="text" class="form-control" name="surname_post" placeholder="input surname" value="{{old('surname_post')}}">
 
-                            <label for="input" class="form-label">idnumba</label>
-                            <input type="text" class="form-control" name="idnumba" placeholder="input idnumba" value="{{old('surname')}}">
 
-                            <label for="input" class="form-label">accountid</label>
-                            <input type="text" class="form-control" name="accountid" placeholder="input accountid" value="{{old('surname')}}">
+                            <label for="input" class="form-label">idnumber</label>
+                            <input type="text" class="form-control" name="idnumber_post" placeholder="input idnumber" value="{{old('idnumber_post')}}">
+
+
+                            <label for="input" class="form-label">IBAN</label>
+                            <input type="text" class="form-control" name="accountid_post" readonly value="{{$acountt}}">
+
+
 
                             <label for="input" class="form-label">email</label>
-                            <input type="text" class="form-control" name="email" placeholder="input email" value="{{old('surname')}}">
+                            <input type="text" class="form-control" name="email_post" placeholder="input email" value="{{old('email_post')}}">
+
 
                             <label for="input" class="form-label">password</label>
-                            <input type="text" class="form-control" name="password" placeholder="input password" value="{{old('surname')}}">
+                            <input type="text" class="form-control" name="password_post" placeholder="input password" value="{{old('password_post')}}">
+
+
+
+
+
+
+
 
                             <button type="submit" class="btn btn-outline-warning">a bag of combos</button>
                             @csrf
