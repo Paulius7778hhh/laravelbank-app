@@ -16,8 +16,7 @@ class AccountlistController extends Controller
      */
     public function index()
     {
-        $accountlist = Accountlist::all()->sortBy('title');
-        return view('back.account.accountlist', ['Accountlist' => $accountlist]);
+        return view('back.account.welcome');
     }
 
     /**
@@ -51,7 +50,7 @@ class AccountlistController extends Controller
         $accountlist->accountid = $request->accountid_post;
         $accountlist->balance = 0;
         $accountlist->save();
-        return redirect()->route('account-accountlist');
+        return redirect()->route('account-show');
     }
 
     /**
@@ -62,7 +61,11 @@ class AccountlistController extends Controller
      */
     public function show(Accountlist $accountlist)
     {
-        //
+        $name = $accountlist->name;
+        $accountlist = Accountlist::all()->sortBy('title');
+        return view('back.account.accountlist', [
+            'Accountlist' => $accountlist
+        ]);
     }
 
     /**
@@ -73,7 +76,8 @@ class AccountlistController extends Controller
      */
     public function edit(Accountlist $accountlist)
     {
-        //
+
+        return view('back.edit', ['accountlist' => $accountlist]);
     }
 
     /**
@@ -85,7 +89,14 @@ class AccountlistController extends Controller
      */
     public function update(Request $request, Accountlist $accountlist)
     {
-        //
+        $accountlist->name = $request->name_edit;
+        $accountlist->surname = $request->surname_edit;
+        $accountlist->idnumber = $request->idnumber_edit;
+        $accountlist->email = $request->email_edit;
+        $accountlist->password = $request->password_edit;
+        $accountlist->username = $request->name_edit . $request->surname_edit;
+        $accountlist->save();
+        return redirect()->route('account-show');
     }
 
     /**
@@ -97,5 +108,23 @@ class AccountlistController extends Controller
     public function destroy(Accountlist $accountlist)
     {
         //
+    }
+    public function moneycount(Accountlist $accountlist)
+    {
+        return view('back.plus', ['accountlist' => $accountlist]);
+    }
+    public function plus(Request $request, Accountlist $accountlist)
+    {
+        $accountlist->balance += $request->balance_deposit;
+        return redirect()->route('account-show');
+    }
+    public function moneysubstract(Accountlist $accountlist)
+    {
+        return view('back.minus', ['accountlist' => $accountlist]);
+    }
+    public function minus(Request $request, Accountlist $accountlist)
+    {
+        $accountlist->balance -= $request->balance_withdraw;
+        return redirect()->route('account-show');
     }
 }

@@ -33,10 +33,14 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::prefix('admin/account')->name('account-')->group(function () {
-    //Route::get('/', [A::class, 'index'])->name('index');
+    Route::get('/', [A::class, 'index'])->name('index');
     Route::get('/create', [A::class, 'create'])->name('create');
     Route::post('/create', [A::class, 'store'])->name('store');
-    Route::get('/edit/{account}', [A::class, 'edit'])->name('edit');
-    Route::put('/edit/{account}', [A::class, 'update'])->name('update');
+    Route::get('/edit/{accountlist}', [A::class, 'edit'])->name('edit');
+    Route::put('/edit/{accountlist}', [A::class, 'update'])->name('update');
     Route::delete('/delete/{account}', [A::class, 'destroy'])->name('delete');
+    Route::get('/accountlist', [A::class, 'show'])->name('show');
+    Route::get('/minus/{accountlist}', [A::class, 'moneysubstract'])->name('account-balance');
+    Route::post('/minus/{accountlist}', [A::class, 'minus'])->name('withdraw');
+    //Route::get('/plus', [A::class, ''])->name('');
 });
