@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Controllers\AccountlistController;
 
 class PostController extends Controller
 {
@@ -84,7 +85,7 @@ class PostController extends Controller
         $end4 = 4;
         $end2 = 2;
         $acountt = 'LT' . str_pad(rand(0, 99), $end2, $start, STR_PAD_LEFT) . ' 7300 0' . str_pad(rand(0, 999), $end3, $start, STR_PAD_LEFT) . ' ' . str_pad(rand(0, 9999), $end4, $start, STR_PAD_LEFT) . ' ' . str_pad(rand(0, 9999), $end4, $start, STR_PAD_LEFT);
-        //if ($data  == null) {
+        //if (A  == null) {
         return $acountt;
         //}
         //foreach ($data as $acount) {

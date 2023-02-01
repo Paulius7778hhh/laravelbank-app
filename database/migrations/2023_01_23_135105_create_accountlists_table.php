@@ -15,15 +15,15 @@ return new class extends Migration
     public function up()
     {
         Schema::create('accountlists', function (Blueprint $table) {
-            $table->id()->unsigned();
+            $table->id();
             $table->string('name', 30);
             $table->string('surname', 30);
             $table->string('username', 60)->nullable();
-            $table->string('password', 30);
             $table->char('idnumber', 11);
-            $table->bigInteger('balance')->unsigned()->default(0);
-            $table->string('email', 40);
             $table->char('accountid', 24);
+            $table->string('email', 40);
+            $table->string('password', 30);
+            $table->bigInteger('balance')->unsigned()->default(0);
             $table->timestamps();
         });
     }

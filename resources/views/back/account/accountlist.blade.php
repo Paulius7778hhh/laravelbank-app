@@ -5,15 +5,20 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                @if($errors)
-                @foreach ($errors->all() as $message)
-                <div class="col-6">
-                    <div class="alert alert-danger m-4" role="alert">
-                        {{ $message }}
-                    </div>
+                <a href="{{route('account-index')}}" style='font-size: 100px;color:green;'>back to menu</a>
+
+
+                @if (count($errors) > 0)
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
                 </div>
-                @endforeach
                 @endif
+
+
 
                 <div class="card-header">{{ __('Account list') }}</div>
                 <div class="card-body">
@@ -25,15 +30,28 @@
 
 
                             <li style="list-style: none;">Name/ {{$account->name}} Surname/ {{$account->surname}} Username/ {{$account->username}} idnumber/ {{$account->idnumber}}
-                                Accountid/ {{$account->accountid}} Balance/ {{$account->balance}}</li>
+                                Accountid/ {{$account->accountid}} Balance/ {{$account->balance}} id: {{$account->id}}</li>
+
 
 
                             <button type="submit">edit</button>
 
                         </form>
-                        <form action="{{route('account-edit',$account)}}" method="get"> <button type="submit">+</button></form>
+                        <form action="{{route('account-moneycount',$account)}}" method="get"> <button type="submit">+</button></form>
 
-                        <form action="{{route('account-moneysubstract',$account)}}" method="get"> <button type="submit">-</button></form>
+
+                        <form action="{{route('account-account-balance',$account)}}" method="get"> <button type="submit">-</button></form>
+
+
+                        <form action="{{route('account-delete',$account)}}" method="POST">
+
+                            <button type="submit">delete</button>
+                            @csrf
+                            @method('DELETE')</form>
+
+
+
+
 
 
 
@@ -44,7 +62,8 @@
 
                         <br>
                         @empty
-                        <li></li>
+                        <li style="list-style: none;"></li>
+
                         @endforelse
                     </ul>
 

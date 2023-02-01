@@ -7,6 +7,16 @@
             <div class="card">
                 <div class="card-header">{{ __('Account Editor') }}</div>
 
+                @if (count($errors) > 0)
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
+
                 <div class="card-body">
                     <form action="{{route('account-update',$accountlist)}}" method="POST">
 
