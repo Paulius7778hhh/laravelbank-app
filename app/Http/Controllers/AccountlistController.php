@@ -149,7 +149,7 @@ class AccountlistController extends Controller
                 'surname_edit' => 'required|alpha:ascii|min:3|max:30',
                 //'username__edit' => 'unique:accountlists,username',_edit
                 'idnumber_edit' => 'required|integer|unique:accountlists,idnumber|regex:/^([3-6]{1})([0-9]{2})([0-1]{1})([0-9]{1})([0-3]{1})([0-9]{1})([0-9999]{4})$/',
-                'email_edit' => 'required|unique:accountlists,email|email:rfc,dns',
+                'email_edit' => 'required|unique:accountlists,email',
                 'password_edit' => 'required|min:8|max:30',
             ],
             [
