@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Auth;
 
 class AccountlistController extends Controller
 {
@@ -14,7 +15,7 @@ class AccountlistController extends Controller
     //{
     //    $this->middleware('auth');
     //}
-    /**
+    /** pranasanus@gmail.com poasdasd56
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -55,7 +56,7 @@ class AccountlistController extends Controller
                 'surname_post' => 'required|alpha:ascii|min:3|max:30',
                 //'username_post' => 'unique:accountlists,username',
                 'idnumber_post' => 'required|integer|unique:accountlists,idnumber|regex:/^([3-6]{1})([0-9]{2})([0-1]{1})([0-9]{1})([0-3]{1})([0-9]{1})([0-9999]{4})$/',
-                'accountid_post' => 'required|unique:accountlists,accountid|min:24|max:24',
+                'accountid_post' => 'required|unique:accountlists,accountid|min:24|max:24|regex:/^LT([0-9]{2}) 7300 0([0-9]{3}) ([0-9]{4}) ([0-9]{4})$/',
                 'email_post' => 'required|unique:accountlists,email|email:rfc,dns',
                 'password_post' => 'required|min:8|max:30',
             ],
@@ -79,6 +80,7 @@ class AccountlistController extends Controller
                 'accountid_post.unique' => 'Can`touch this IBAN',
                 'accountid_post.min' => 'Can`touch this IBAN',
                 'accountid_post.max' => 'Can`touch this IBAN',
+                'accountid_post.regex' => 'Don`t touch this IBAN ya bastard',
                 'password_post.required' => 'Enter password',
                 'password_post.min' => 'Password too short',
                 'password_post.max' => 'Password too long'
@@ -146,7 +148,7 @@ class AccountlistController extends Controller
                 'name_edit' => 'required|alpha:ascii|min:3|max:30',
                 'surname_edit' => 'required|alpha:ascii|min:3|max:30',
                 //'username__edit' => 'unique:accountlists,username',_edit
-                'accountid_edit' => 'required|unique:accountlists,accountid|min:24|max:24',
+                'idnumber_edit' => 'required|integer|unique:accountlists,idnumber|regex:/^([3-6]{1})([0-9]{2})([0-1]{1})([0-9]{1})([0-3]{1})([0-9]{1})([0-9999]{4})$/',
                 'email_edit' => 'required|unique:accountlists,email|email:rfc,dns',
                 'password_edit' => 'required|min:8|max:30',
             ],
@@ -195,9 +197,11 @@ class AccountlistController extends Controller
      */
     public function destroy(Accountlist $accountlist)
     {
-
+        if ($accountlist->balance !== 0) {
+            return redirect()->back()->withErrors('Can`t delete account that has money left in it. If you want delete account please remove all money from it');
+        }
         $accountlist->delete();
-        return redirect()->route('account-show');
+        return redirect()->route('account-show')->with('status', 'Deletion success');
     }
     public function moneycount(Accountlist $accountlist)
     {
@@ -205,9 +209,31 @@ class AccountlistController extends Controller
     }
     public function plus(Request $request, Accountlist $accountlist)
     {
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'balance_deposit' => 'required|numeric|min_digits:1'
+
+            ],
+            [
+                'balance_deposit.required' => 'Fill out name field',
+                'balance_deposit.numeric' => 'must be a number',
+                'balance_deposit.min_digits' => 'cannot input negative number'
+
+            ]
+
+        );
+        $request->flash();
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator);
+        }
+        if ($request->balance_deposit == 0) {
+            return redirect()->back()->withErrors('No zero');
+        }
         $accountlist->balance = $accountlist->balance + $request->balance_deposit;
         $accountlist->save();
-        return redirect()->back();
+        return redirect()->back()->with('status', 'Deposit success');
     }
     public function moneysubstract(Accountlist $accountlist)
     {
@@ -224,7 +250,7 @@ class AccountlistController extends Controller
             [
                 'balance_withdraw.required' => 'Fill out name field',
                 'balance_withdraw.numeric' => 'must be a number',
-                'balance_withdraw.min_digits' => 'cannot input 0 or negative number'
+                'balance_withdraw.min_digits' => 'cannot input negative number'
 
             ]
 
@@ -234,8 +260,14 @@ class AccountlistController extends Controller
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator);
         }
+        if ($accountlist->balance < $request->balance_withdraw) {
+            return redirect()->back()->withErrors('Cannot withdraw more money than your account has');
+        }
+        if ($request->balance_withdraw == 0) {
+            return redirect()->back()->withErrors('No zero');
+        }
         $accountlist->balance = $accountlist->balance - $request->balance_withdraw;
         $accountlist->save();
-        return redirect()->back();
+        return redirect()->back()->with('status', 'Withdraw success');
     }
 }

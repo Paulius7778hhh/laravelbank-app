@@ -29,7 +29,6 @@ Route::post('/form', [PostController::class, 'doForm'])->name('doForm');
 Route::get('/welcome', [PostController::class, 'welc']);
 
 
-
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::prefix('admin/account')->name('account-')->group(function () {
